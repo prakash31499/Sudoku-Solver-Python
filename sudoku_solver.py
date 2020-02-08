@@ -2,7 +2,7 @@ import copy
 ret = 0
 
 sudoku = [[0 for x in range(9)]for y in range(9)]
-
+# Test Case 1: Press 1 to select this Sudoku (World's Hardest Sudoku)
 test1 = [
     [ 8,0,0,0,0,0,0,0,0],
     [ 0,0,3,6,0,0,0,0,0],
@@ -14,7 +14,7 @@ test1 = [
     [ 0,0,8,5,0,0,0,1,0],
     [ 0,9,0,0,0,0,4,0,0]
     ]
-
+# Test Case 2: Press 2 to select this Sudoku ( Common Newspaper Sudoku)
 test2 = [
      [ 0,7,0,0,0,0,0,5,0],
      [ 0,9,3,0,0,0,1,6,0],
@@ -35,19 +35,21 @@ boxxx = (0,1,2,9,10,11,18,19,20)
 
 rem_in = [ [ [] for x in range(9) ] for y in range(3) ]
 
+# Print Sudoku
 def printbox(box):
     print("\n")
     for x in range(9):
         for y in range(9):
             print("  ",box[x][y]," ",end = " ")
         print("\n")
-
+        
+# Function that takes input
 def inpu():
     global sudoku
     global test
     ans = input("Do you want to input (y/n) ")
     if ans != 'y':
-        ch = int(input("Choose any one 1. or 2."))
+        ch = int(input("Choose any one test input 1. or 2."))
         if ch == 1:
             print(" The question is.. ")
             printbox(test1)
@@ -58,12 +60,13 @@ def inpu():
             return test2
     n = int(input(" How Many Numbers? "))
     for x in range(n):
-        pos = int(input("Enter the position "))
+        pos = int(input("Enter the position from 0 to 80"))
         sudoku [ int(pos/9) ][ pos%9 ] = int(input(" Enter the number "))
     print(" The question is.. ")
     printbox(sudoku)
     return sudoku
 
+# Solves the Sudoku by basic checks. If it fails uses assumptions
 def solved(box):
     global ret
     res = solve(box)
@@ -72,6 +75,7 @@ def solved(box):
     else:
         assume(box)
             
+# This function implements basic checks updates the Sudoku
 def solve(bx):
     global square
     global rem_in
@@ -95,6 +99,7 @@ def solve(bx):
             return 2        
     return 0
 
+# This function assumes a value at a box and proceeds to solve until a contradiction is encountered, or Sudoku is solved
 def assume(box):
     global square
     global ret
@@ -132,6 +137,7 @@ def assume(box):
                 elif u == 2:
                     return 0
             
+# Intersection of 3 lists
 def intersec(s1,s2,s3):
     s_1 = set(s1)
     s_2 = set(s2)
@@ -140,6 +146,7 @@ def intersec(s1,s2,s3):
     final = inter.intersection(s_3)
     return list(final)
 
+# The following functions uses simple methods to create feature set from input sudoku and perform basic checks on them
 def which_box( row,col ) :
     global bodef
     for y in range(9):
